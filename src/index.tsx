@@ -2,17 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import App from './components/App/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.js';
 import 'popper.js/dist/popper.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import { MainMenu, MainMenuItem } from './components/MainMenu/MainMenu';
+import HomePage from './components/HomePage/App';
+import { HashRouter, Switch, Route } from 'react-router-dom';
+import ContactPage from './components/ContactPage/ContactPage';
+import LoginPage from './components/LoginPage/LoginPage';
 
 const menuItems = [
   new MainMenuItem("Home", "/"),
-  new MainMenuItem("About us", "/page/about-us"),
   new MainMenuItem("Contact", "/contact"),
   new MainMenuItem("Login", "/login"),
 ];
@@ -21,7 +23,16 @@ ReactDOM.render(
   <React.StrictMode>
     {/* Napravili smo menu item sa nizom itema koje smo definisali */}
     <MainMenu items={menuItems}></MainMenu>
-    <App />
+
+    <HashRouter>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/contact" component={ContactPage} />
+        <Route path="/login" component={LoginPage} />
+      </Switch>
+    </HashRouter>
+
+
   </React.StrictMode>,
   document.getElementById('root')
 );
