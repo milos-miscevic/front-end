@@ -8,11 +8,19 @@ import 'jquery/dist/jquery.js';
 import 'popper.js/dist/popper.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
-import { MainMenu } from './components/MainMenu/MainMenu';
+import { MainMenu, MainMenuItem } from './components/MainMenu/MainMenu';
+
+const menuItems = [
+  new MainMenuItem("Home", "/"),
+  new MainMenuItem("About us", "/page/about-us"),
+  new MainMenuItem("Contact", "/contact"),
+  new MainMenuItem("Login", "/login"),
+];
 
 ReactDOM.render(
   <React.StrictMode>
-    <MainMenu></MainMenu>
+    {/* Napravili smo menu item sa nizom itema koje smo definisali */}
+    <MainMenu items={menuItems}></MainMenu>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
