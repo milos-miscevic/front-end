@@ -22,8 +22,28 @@ export default function api(
         };
 
         axios(requestData)
-            .then(res => responseHandler(res, resolve, requestData))
-            .catch(err => {
+            .then(res => responseHandler(res, resolve))
+            .catch(async err => {
+
+                if (err.response.status === 401) {
+                    const newToken = await refreshToken();
+
+                    if (!newToken) {
+                        const response: ApiResponse = {
+
+                            status: 'login',
+                            data: null,
+                        };
+                        return resolve(response);
+                    }
+
+                    saveToken(newToken);
+
+                    requestData.headers['Authorization'] = getToken();
+
+                    return await repeatRequest(requestData, resolve);
+                }
+
                 const response: ApiResponse = {
                     status: 'error',
                     data: err
@@ -40,31 +60,11 @@ export interface ApiResponse {
 
 async function responseHandler(
     res: AxiosResponse<any>,
-    resolve: (value?: ApiResponse) => void,
-    requestData: AxiosRequestConfig
+    resolve: (value?: ApiResponse) => void
 
 ) {
     // http error statusi
     if (res.status < 200 || res.status >= 300) {
-
-        if (res.status === 401) {
-            const newToken = await refreshToken(requestData);
-
-            if (!newToken) {
-                const response: ApiResponse = {
-
-                    status: 'login',
-                    data: null,
-                };
-                return resolve(response);
-            }
-
-            saveToken(newToken);
-
-            requestData.headers['Authorization'] = getToken();
-
-            return await repeatRequest(requestData, resolve);
-        }
 
         const response: ApiResponse = {
 
@@ -72,10 +72,17 @@ async function responseHandler(
             data: res.data,
         };
 
-        return resolve(res.data);
+        return resolve(response);
     }
 
-    // negativna vrednost znaci greska
+    const response: ApiResponse = {
+        status: 'ok',
+        data: res.data,
+    };
+
+    return resolve(response);
+
+    /*
     let response: ApiResponse;
 
     if (res.data.statusCode < 0) {
@@ -92,6 +99,7 @@ async function responseHandler(
     }
 
     resolve(response);
+    */
 }
 
 
@@ -115,11 +123,8 @@ export function saveRefreshToken(token: string) {
 
 
 
-async function refreshToken(
-    requestData: AxiosRequestConfig,
-
-): Promise<string | null> {
-    const path = 'administrator/refresh';
+async function refreshToken(): Promise<string | null> {
+    const path = 'auth/administrator/refresh';
     const data = {
         token: getRefreshToken(),
     }
