@@ -8,7 +8,7 @@ import 'popper.js/dist/popper.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import { MainMenu, MainMenuItem } from './components/MainMenu/MainMenu';
-import HomePage from './components/HomePage/App';
+import HomePage from './components/HomePage/HomePage';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import ContactPage from './components/ContactPage/ContactPage';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -18,9 +18,6 @@ const menuItems = [
   new MainMenuItem("Home", "/"),
   new MainMenuItem("Contact", "/contact"),
   new MainMenuItem("Login", "/login"),
-  new MainMenuItem("Cat 1", "/category/1/"),
-  new MainMenuItem("Cat 7", "/category/7/"),
-  new MainMenuItem("Cat 21", "/category/21/"),
 ];
 
 ReactDOM.render(
