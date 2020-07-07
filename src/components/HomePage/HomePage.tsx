@@ -6,15 +6,10 @@ import CategoryType from '../../types/CategoryType';
 import { Link } from 'react-router-dom';
 import api, { ApiResponse } from '../../api/api';
 import RoledMainMenu from '../RoledMainMenu/RoledMainMenu';
+import ApiCategoryDto from '../../dtos/ApiCategoryDto';
 
 interface HomePageState {
   categories: CategoryType[];
-}
-
-interface ApiCategoryDto {
-  categoryId: number;
-  name: string;
-  description: string;
 }
 
 class HomePage extends React.Component {
@@ -48,8 +43,8 @@ class HomePage extends React.Component {
 
   }
 
-  private putCategoriesInState(data: ApiCategoryDto[]) {
-    const categories: CategoryType[] = data.map(category => {
+  private putCategoriesInState(data?: ApiCategoryDto[]) {
+    const categories: CategoryType[] | undefined= data?.map(category => {
       return {
         categoryId: category.categoryId,
         name: category.name,
@@ -75,7 +70,7 @@ class HomePage extends React.Component {
               <FontAwesomeIcon icon={faListAlt} />  Categories
             </Card.Title>
             <Row>
-              {this.state.categories.map(this.singleCategory)}
+              {this.state.categories?.map(this.singleCategory)}
             </Row>
 
 

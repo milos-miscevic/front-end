@@ -13,10 +13,11 @@ import ContactPage from './components/ContactPage/ContactPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
+import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
 
 ReactDOM.render(
   <React.StrictMode>
-    
+
 
     <HashRouter>
       <Switch>
@@ -24,7 +25,8 @@ ReactDOM.render(
         <Route path="/contact" component={ContactPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/category/:cId" component={CategoryPage} />
-        <Route path="/administrator/dashboard" component={AdministratorDashboard} />
+        <Route exact path="/administrator/dashboard/" component={AdministratorDashboard} />
+        <Route path="/administrator/dashboard/category/" component={AdministratorDashboardCategory} />
       </Switch>
     </HashRouter>
 
