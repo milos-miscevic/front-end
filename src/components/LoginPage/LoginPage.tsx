@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Card, Form, Button, Col, Alert } from 'react-bootstrap';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import api, { ApiResponse, saveToken, saveRefreshToken } from '../../api/api';
+import api, { ApiResponse, saveToken, saveRefreshToken, saveUsername } from '../../api/api';
 import { Redirect } from 'react-router-dom';
 
 interface LoginPageState {
@@ -73,6 +73,7 @@ export default class LoginPage extends React.Component {
                     }
                     saveToken(res.data.token);
                     saveRefreshToken(res.data.refreshToken);
+                    saveUsername(res.data.username);
 
                     this.setLogginState(true);
                 }
@@ -82,7 +83,7 @@ export default class LoginPage extends React.Component {
     render() {
         if (this.state.isLoggedIn === true) {
             return (
-                <Redirect to="/" />
+                <Redirect to="/administrator/dashboard" />
             );
         }
 

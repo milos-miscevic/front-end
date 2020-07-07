@@ -13,6 +13,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import ContactPage from './components/ContactPage/ContactPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
+import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
 
 const menuItems = [
   new MainMenuItem("Home", "/"),
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/contact" component={ContactPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/category/:cId" component={CategoryPage} />
+        <Route path="/administrator/dashboard" component={AdministratorDashboard} />
       </Switch>
     </HashRouter>
 

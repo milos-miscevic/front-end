@@ -5,6 +5,7 @@ export default function api(
     path: string,
     method: 'get' | 'post' | 'patch' | 'delete' | 'put',
     body: any | undefined, // get metod nema body, tako da je njegova podrazumevana vrednost "undefined"
+    
 ) {
 
     return new Promise<ApiResponse>((resolve) => {
@@ -105,7 +106,7 @@ async function responseHandler(
 
 function getToken(): string {
     const token = localStorage.getItem('api_token');
-    return 'Berer' + token;
+    return 'Berer ' + token;
 }
 
 export function saveToken(token: string) {
@@ -121,7 +122,14 @@ export function saveRefreshToken(token: string) {
     localStorage.setItem('api_refresh_token', token);
 }
 
+export function saveUsername(username: string) {
+    localStorage.setItem('api_username', username);
+}
 
+export function getUsername(): string {
+    const token = localStorage.getItem('api_username');
+    return 'Berer ' + token;
+}
 
 async function refreshToken(): Promise<string | null> {
     const path = 'auth/administrator/refresh';
@@ -166,7 +174,7 @@ async function repeatRequest(
                 response = {
 
                     status: 'ok',
-                    data: res,
+                    data: res.data,
                 };
             }
 
