@@ -5,9 +5,8 @@ import { faListAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
 import CategoryType from '../../types/CategoryType';
 import api, { ApiResponse } from '../../api/api';
 import ArticleType from '../../types/ArticleType';
-import { Link } from 'react-router-dom';
-import { ApiConfig } from '../../config/api.config';
 import SingleArticlePreview from '../SingleArticlePreview/SingleArticlePreview';
+import RoledMainMenu from '../RoledMainMenu/RoledMainMenu';
 
 interface CategoryPageProperties {
     match: {
@@ -36,12 +35,6 @@ interface CategoryPageState {
         name: string;
         values: string[];
     }[];
-}
-
-interface CategoryDto {
-    categoryId: number;
-    name: string;
-    description: string;
 }
 
 interface ArticleDto {
@@ -105,6 +98,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
     render() {
         return (
             <Container>
+                <RoledMainMenu role="visitor" />
                 <Card>
                     <Card.Body>
                         <Card.Title>
@@ -170,7 +164,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
     }
 
     private addFeatureFilterValue(featureId: number, value: string) {
-        const newSelectedFeatures = [... this.state.filters.selectedFeatures];
+        const newSelectedFeatures = [...this.state.filters.selectedFeatures];
         newSelectedFeatures.push({
             featureId: featureId,
             value: value,

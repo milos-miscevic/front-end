@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CategoryType from '../../types/CategoryType';
 import { Link } from 'react-router-dom';
 import api, { ApiResponse } from '../../api/api';
+import RoledMainMenu from '../RoledMainMenu/RoledMainMenu';
 
 interface HomePageState {
   categories: CategoryType[];
@@ -67,6 +68,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <Container>
+        <RoledMainMenu role="visitor" />
         <Card>
           <Card.Body>
             <Card.Title>
