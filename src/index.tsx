@@ -15,6 +15,7 @@ import CategoryPage from './components/CategoryPage/CategoryPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
 import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
 import AdministratorDashboardFeature from './components/AdministratorDashboardFeature/AdministratorDashboardFeature';
+import AdministratorDashboardArticle from './components/AdministratorDashboardArticle/AdministratorDashboardArticle';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route exact path="/administrator/dashboard/" component={AdministratorDashboard} />
         <Route path="/administrator/dashboard/category/" component={AdministratorDashboardCategory} />
         <Route path="/administrator/dashboard/feature/:cId" component ={AdministratorDashboardFeature} />
+        <Route path="/administrator/dashboard/article/" component ={AdministratorDashboardArticle} />
       </Switch>
     </HashRouter>
 
@@ -37,7 +39,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

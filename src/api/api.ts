@@ -5,7 +5,7 @@ export default function api(
     path: string,
     method: 'get' | 'post' | 'patch' | 'delete' | 'put',
     body: any | undefined, // get metod nema body, tako da je njegova podrazumevana vrednost "undefined"
-    
+
 ) {
 
     return new Promise<ApiResponse>((resolve) => {
@@ -18,6 +18,60 @@ export default function api(
             data: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': getToken(),
+            },
+        };
+
+        axios(requestData)
+            .then(res => responseHandler(res, resolve))
+            .catch(async err => {
+
+                if (err.response.status === 401) {
+                    const newToken = await refreshToken();
+
+                    if (!newToken) {
+                        const response: ApiResponse = {
+
+                            status: 'login',
+                            data: null,
+                        };
+                        return resolve(response);
+                    }
+
+                    saveToken(newToken);
+
+                    requestData.headers['Authorization'] = getToken();
+
+                    return await repeatRequest(requestData, resolve);
+                }
+
+                const response: ApiResponse = {
+                    status: 'error',
+                    data: err
+                };
+                resolve(response);
+            });
+    });
+}
+
+export function apiFile(
+    path: string,
+    name: string,
+    file: File,
+) {
+
+    return new Promise<ApiResponse>((resolve) => {
+        const formData = new FormData();
+        formData.append(name, file);
+
+        const requestData: AxiosRequestConfig = {
+
+            method: 'post',
+            url: path,
+            baseURL: ApiConfig.API_URL,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/formdata',
                 'Authorization': getToken(),
             },
         };
