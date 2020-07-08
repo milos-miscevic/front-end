@@ -14,6 +14,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
 import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
+import AdministratorDashboardFeature from './components/AdministratorDashboardFeature/AdministratorDashboardFeature';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Route path="/category/:cId" component={CategoryPage} />
         <Route exact path="/administrator/dashboard/" component={AdministratorDashboard} />
         <Route path="/administrator/dashboard/category/" component={AdministratorDashboardCategory} />
+        <Route path="/administrator/dashboard/feature/:cId" component ={AdministratorDashboardFeature} />
       </Switch>
     </HashRouter>
 
