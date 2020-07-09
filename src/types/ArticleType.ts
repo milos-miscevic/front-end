@@ -5,7 +5,7 @@ export default class ArticleType {
     description?: string;
     imageUrl?: string;
     price?: number;
-
+    categoryId?: number;
 
 
     articleFeatures?: {

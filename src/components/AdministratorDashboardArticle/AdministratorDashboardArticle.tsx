@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, Table, Button, Modal, Form, Alert, Row, Col } from 'react-bootstrap'
-import { faListAlt, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faPlus, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Redirect } from 'react-router-dom';
 import api, { ApiResponse, apiFile } from '../../api/api';
@@ -33,7 +33,7 @@ interface AdministratorDashboardArticleState {
     };
 
     editModal: {
-        visible: false;
+        visible: boolean;
         message: string;
 
         articleId?: number;
@@ -147,6 +147,41 @@ class AdministratorDashboardArticle extends React.Component {
             })));
     }
 
+
+    private setEditModalFeatureUse(featureId: number, use: boolean) {
+        const editFeatures: { featureId: number, use: number }[] = [...this.state.editModal.features];
+
+        for (const feature of editFeatures) {
+            if (feature.featureId === featureId) {
+                feature.use = use ? 1 : 0;
+                break;
+            }
+        }
+
+        this.setState(Object.assign(this.state,
+            Object.assign(this.state.editModal, {
+                features: editFeatures,
+            }),
+        ));
+    }
+
+    private setEditModalFeatureValue(featureId: number, value: string) {
+        const editFeatures: { featureId: number, value: string }[] = [...this.state.editModal.features];
+
+        for (const feature of editFeatures) {
+            if (feature.featureId === featureId) {
+                feature.value = value;
+                break;
+            }
+        }
+
+        this.setState(Object.assign(this.state,
+            Object.assign(this.state.editModal, {
+                features: editFeatures,
+            }),
+        ));
+    }
+
     private setEditModalStringFieldState(fieldName: string, newValue: string) {
         this.setState(Object.assign(this.state,
             Object.assign(this.state.editModal, {
@@ -157,7 +192,7 @@ class AdministratorDashboardArticle extends React.Component {
     private setEditModalNumberFieldState(fieldName: string, newValue: any) {
         this.setState(Object.assign(this.state,
             Object.assign(this.state.editModal, {
-                [fieldName]: (newValue === null) ? null : Number(newValue),
+                [fieldName]: (newValue === 'null') ? null : Number(newValue),
             })));
     }
 
@@ -174,7 +209,7 @@ class AdministratorDashboardArticle extends React.Component {
         this.getArticles();
     }
 
-    private async getFeaturesbyCategoryId(categoryId: number): Promise<FeatureBaseType[]> {
+    private async getFeaturesByCategoryId(categoryId: number): Promise<FeatureBaseType[]> {
         return new Promise(resolve => {
             api('/api/feature/?filter=categoryId||$eq||' + categoryId + '/', 'get', {})
                 .then((res: ApiResponse) => {
@@ -243,6 +278,7 @@ class AdministratorDashboardArticle extends React.Component {
                 features: article.features,
                 photos: article.photos,
                 category: article.category,
+                categoryId: article.categoryId,
             };
         });
 
@@ -260,7 +296,7 @@ class AdministratorDashboardArticle extends React.Component {
     private async addModalCategoryChanged(event: React.ChangeEvent<HTMLSelectElement>) {
         this.setAddModalNumberFieldState('categoryId', event.target.value);
 
-        const features = await this.getFeaturesbyCategoryId(this.state.addModal.categoryId);
+        const features = await this.getFeaturesByCategoryId(this.state.addModal.categoryId);
 
         const stateFeatures = features.map(feature => ({
             featureId: feature.featureId,
@@ -344,7 +380,7 @@ class AdministratorDashboardArticle extends React.Component {
                             filePicker.value = '';
                         }
                     }}>
-                <Modal.Header closeButton>
+                    <Modal.Header closeButton>
                         <Modal.Title>Add new article</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -411,6 +447,67 @@ class AdministratorDashboardArticle extends React.Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+                <Modal size="lg" centered show={this.state.editModal.visible}
+                    onHide={() => this.setEditModalVisibleState(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit article</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="edit-name">Name</Form.Label>
+                            <Form.Control id="edit-name" type="text" value={this.state.editModal.name}
+                                onChange={(e) => this.setEditModalStringFieldState('name', e.target.value)} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="edit-shortDescription">Short description</Form.Label>
+                            <Form.Control id="edit-shortDescription" type="text" value={this.state.editModal.shortDescription}
+                                onChange={(e) => this.setEditModalStringFieldState('shortDescription', e.target.value)} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="edit-description">Description</Form.Label>
+                            <Form.Control id="edit-description" as="textarea" value={this.state.editModal.description}
+                                onChange={(e) => this.setEditModalStringFieldState('description', e.target.value)}
+                                rows={10} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="edit-price">Price</Form.Label>
+                            <Form.Control id="edit-price" type="number" min={0.01} step={0.01} value={this.state.editModal.price}
+                                onChange={(e) => this.setEditModalNumberFieldState('price', e.target.value)} />
+                        </Form.Group>
+
+                        <div>
+                            {this.state.editModal.features.map(this.printEditModalFeatureInput, this)}
+                        </div>
+
+
+                        <Form.Group>
+                            <Button variant="primary" onClick={() => this.doEditArticle()}>
+                                <FontAwesomeIcon icon={faSave} /> Edit article
+                                        </Button>
+                        </Form.Group>
+                        {this.state.editModal.message ? (
+                            <Alert variant="danger" value={this.state.editModal.message} />
+                        ) : ''}
+                    </Modal.Body>
+                </Modal>
+
+
+
+
             </Container >
         );
     }
@@ -435,12 +532,32 @@ class AdministratorDashboardArticle extends React.Component {
         );
     }
 
+    private printEditModalFeatureInput(feature: any) {
+        return (
+            <Form.Group>
+                <Row>
+                    <Col xs="4" sm="1" className="text-center">
+                        <input type="checkbox" value="1" checked={feature.use === 1}
+                            onChange={(e) => this.setEditModalFeatureUse(feature.featureId, e.target.checked)} />
+                    </Col>
+                    <Col xs="8" sm="3">
+                        {feature.name}
+                    </Col>
+                    <Col xs="12" sm="8">
+                        <Form.Control type="text" value={feature.value}
+                            onChange={(e) => this.setEditModalFeatureValue(feature.featureId, e.target.value)} />
+                    </Col>
+                </Row>
+            </Form.Group>
+        );
+    }
+
     private showAddModal() {
         this.setAddModalStringFieldState('name', '');
         this.setAddModalStringFieldState('shortDescription', '');
-        this.setAddModalStringFieldState('description', 'null');
-        this.setAddModalStringFieldState('categoryId', '1');
-        this.setAddModalStringFieldState('price', '0.01');
+        this.setAddModalStringFieldState('description', '');
+        this.setAddModalNumberFieldState('categoryId', '1');
+        this.setAddModalNumberFieldState('price', '0.01');
 
 
         this.setState(Object.assign(this.state,
@@ -504,15 +621,62 @@ class AdministratorDashboardArticle extends React.Component {
         return await apiFile('/api/article/' + articleId + '/uploadPhoto/', 'photo', file);
     }
 
-    private showEditModal(article: ArticleType) {
+    private async showEditModal(article: ArticleType) {
         this.setEditModalStringFieldState('name', String(article.name));
         this.setEditModalStringFieldState('message', '');
         this.setEditModalNumberFieldState('articleId', article.articleId);
+        this.setEditModalStringFieldState('shortDescription', String(article.shortDescription));
+        this.setEditModalStringFieldState('description', String(article.description));
+        this.setEditModalNumberFieldState('price', article.price);
+
+        if (!article.categoryId?.toString()) {
+            return console.log('OVDE JE PROBLEM, NE PRONALAZI CATEGORYID');
+        }
+
+        const categoryId: number = article.categoryId;
+
+        const allFeatures: any[] = await this.getFeaturesByCategoryId(categoryId);
+
+        for (const apiFeature of allFeatures) {
+
+            apiFeature.use = 0;
+            apiFeature.value = '';
+
+            if (!article.articleFeatures) {
+                continue;
+            }
+            for (const articleFeature of article.articleFeatures) {
+                if (articleFeature.featureId === apiFeature.featureId) {
+                    apiFeature.use = 1;
+                    apiFeature.value = articleFeature.value;
+                }
+            }
+        }
+
+
+        this.setState(Object.assign(this.state,
+            Object.assign(this.state.editModal, {
+                features: allFeatures,
+            }),
+        ));
+
         this.setEditModalVisibleState(true);
     }
     private doEditArticle() {
         api('/api/article/' + this.state.editModal.articleId, 'patch', {
 
+            name: this.state.editModal.name,
+            shortDescription: this.state.editModal.shortDescription,
+            description: this.state.editModal.description,
+            price: this.state.editModal.price,
+
+            features: this.state.editModal.features
+                .filter(feature => feature.use === 1)
+                .map(feature => ({
+                    featureId: feature.featureId,
+                    value: feature.value
+                }))
+                
         })
             .then((res: ApiResponse) => {
                 if (res.status === "login") {
