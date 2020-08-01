@@ -634,7 +634,7 @@ class AdministratorDashboardArticle extends React.Component {
         this.setEditModalNumberFieldState('price', article.price);
 
         if (!article.categoryId?.toString()) {
-            return console.log('OVDE JE PROBLEM, NE PRONALAZI CATEGORYID');
+            return console.log();
         }
 
         const categoryId: number = article.categoryId;
