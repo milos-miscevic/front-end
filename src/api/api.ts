@@ -3,7 +3,7 @@ import { ApiConfig } from '../config/api.config';
 
 export default function api(
     path: string,
-    method: 'get' | 'post' | 'patch' | 'delete' | 'put',
+    method: 'get' | 'post' | 'patch' | 'delete',
     body: any | undefined, // get metod nema body, tako da je njegova podrazumevana vrednost "undefined"
 
 ) {
@@ -183,6 +183,12 @@ export function saveUsername(username: string) {
 export function getUsername(): string {
     const token = localStorage.getItem('api_username');
     return 'Berer ' + token;
+}
+
+export function removeTokenData() {
+    localStorage.removeItem('api_token');
+    localStorage.removeItem('api_refresh_token');
+    localStorage.removeItem('api_username');
 }
 
 async function refreshToken(): Promise<string | null> {

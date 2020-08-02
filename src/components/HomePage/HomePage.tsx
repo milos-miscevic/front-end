@@ -28,9 +28,10 @@ class HomePage extends React.Component {
     this.getCategories();
   }
 
-  componentWillUpdate() {
-    this.getCategories();
-  }
+  /*  componentWillUpdate() {
+      this.getCategories();
+    }
+    */
 
   private getCategories() {
     api('api/category/', 'get', {})
@@ -44,7 +45,7 @@ class HomePage extends React.Component {
   }
 
   private putCategoriesInState(data?: ApiCategoryDto[]) {
-    const categories: CategoryType[] | undefined= data?.map(category => {
+    const categories: CategoryType[] | undefined = data?.map(category => {
       return {
         categoryId: category.categoryId,
         name: category.name,
@@ -92,7 +93,7 @@ class HomePage extends React.Component {
             <Card.Text>
               {category.description}
             </Card.Text>
-            
+
             <Link to={`/category/${category.categoryId}`}
               className="btn btn-primary btn-block btn-sm">
 
