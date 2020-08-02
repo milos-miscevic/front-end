@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, Table, Button, Modal, Form, Alert, Row, Col } from 'react-bootstrap'
-import { faListAlt, faPlus, faEdit, faSave, faImages } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faPlus, faEdit, faSave, faImages, faBackward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Redirect, Link } from 'react-router-dom';
 import api, { ApiResponse, apiFile } from '../../api/api';
@@ -333,7 +333,14 @@ class AdministratorDashboardArticle extends React.Component {
                         <Table hover size="sm" bordered>
                             <thead>
                                 <tr>
-                                    <th colSpan={4}></th>
+                                <th>
+                                        <Link to="/administrator/dashboard/"
+                                            className="btn btn-sm btn-secondary">
+                                            <FontAwesomeIcon icon={faBackward} /> Back to dashboard
+
+                                        </Link>
+                                    </th>
+                                    <th colSpan={3}></th>
                                     <th className="text-center">
                                         <Button variant="primary" size="sm"
                                             onClick={() => this.showAddModal()}>

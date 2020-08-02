@@ -9,7 +9,6 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import HomePage from './components/HomePage/HomePage';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import ContactPage from './components/ContactPage/ContactPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
@@ -27,16 +26,15 @@ ReactDOM.render(
     <HashRouter>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/contact" component={ContactPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/administrator/logout/" component={LogoutPage} />
         <Route path="/category/:cId" component={CategoryPage} />
         <Route path="/article/:aId" component={ArticlePage} />
         <Route exact path="/administrator/dashboard/" component={AdministratorDashboard} />
         <Route path="/administrator/dashboard/category/" component={AdministratorDashboardCategory} />
-        <Route path="/administrator/dashboard/feature/:cId" component ={AdministratorDashboardFeature} />
-        <Route path="/administrator/dashboard/article/" component ={AdministratorDashboardArticle} />
-        <Route path="/administrator/dashboard/photo/:aId" component={AdministratorDashboardPhoto}/>
+        <Route path="/administrator/dashboard/feature/:cId" component={AdministratorDashboardFeature} />
+        <Route path="/administrator/dashboard/article/" component={AdministratorDashboardArticle} />
+        <Route path="/administrator/dashboard/photo/:aId" component={AdministratorDashboardPhoto} />
       </Switch>
     </HashRouter>
 

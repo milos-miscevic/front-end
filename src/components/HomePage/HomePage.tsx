@@ -49,6 +49,7 @@ class HomePage extends React.Component {
       return {
         categoryId: category.categoryId,
         name: category.name,
+        imagePath: category.imagePath,
         description: category.description,
         items: [],
       };
@@ -87,8 +88,13 @@ class HomePage extends React.Component {
       <Col lg="3" md="4" sm="6" xs="12">
         <Card className="mb-3">
           <Card.Body>
+          <Card.Header>
+            <img alt={ category.name }
+                 src={ category.imagePath }
+                 className="w-100" />
+          </Card.Header>
             <Card.Title as="p">
-              {category.name}
+              <b>{category.name}</b>
             </Card.Title>
             <Card.Text>
               {category.description}
