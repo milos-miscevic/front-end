@@ -276,7 +276,7 @@ export default class CategoryPage extends React.Component<CategoryPageProperties
         if (this.state.articles?.length === 0) {
             return (
                 <div>
-                    There are no articles in this category.
+                    There is no jewelry in this category.
                 </div>
             );
         }

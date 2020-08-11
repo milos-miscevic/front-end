@@ -43,7 +43,7 @@ render(){
               <Link to={`/article/${this.props.article.articleId}`}
                 className="btn btn-primary btn-block btn-sm">
   
-                Open article page
+                Open jewelry details
   
               </Link>
   

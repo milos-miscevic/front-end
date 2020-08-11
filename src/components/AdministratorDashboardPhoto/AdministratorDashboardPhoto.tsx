@@ -83,7 +83,7 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
                         <Nav className="mb-3">
                             <Nav.Item>
                                 <Link to="/administrator/dashboard/article/" className="btn btn-sm btn-info">
-                                    <FontAwesomeIcon icon={faBackward} /> Go back to articles
+                                    <FontAwesomeIcon icon={faBackward} /> Go back to jewelry
                                 </Link>
                             </Nav.Item>
                         </Nav>
@@ -94,10 +94,10 @@ class AdministratorDashboardPhoto extends React.Component<AdministratorDashboard
 
                         <Form className="mt-5">
                             <p>
-                                <strong>Add new photo to this article</strong>
+                                <strong>Add new photo for this jewelry</strong>
                             </p>
                             <Form.Group>
-                                <Form.Label htmlFor="add-photo">New article photo</Form.Label>
+                                <Form.Label htmlFor="add-photo">New jewelry photo</Form.Label>
                                 <Form.File id="add-photo" />
                             </Form.Group>
                             <Form.Group>

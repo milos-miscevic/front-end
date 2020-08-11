@@ -69,7 +69,7 @@ class HomePage extends React.Component {
         <Card>
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faListAlt} />  Categories
+              <FontAwesomeIcon icon={faListAlt} />  Jewelry types
             </Card.Title>
             <Row>
               {this.state.categories?.map(this.singleCategory)}

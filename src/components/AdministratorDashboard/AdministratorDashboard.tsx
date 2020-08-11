@@ -62,8 +62,8 @@ class AdministratorDashboard extends React.Component {
             </Card.Title>
                         <ul>
 
-                            <li><Link to="/administrator/dashboard/category/">Categories</Link></li>
-                            <li><Link to="/administrator/dashboard/article/">Articles</Link></li>
+                            <li><Link to="/administrator/dashboard/category/">Categories of jewelry</Link></li>
+                            <li><Link to="/administrator/dashboard/article/">Jewelry</Link></li>
 
                         </ul>
                     </Card.Body>

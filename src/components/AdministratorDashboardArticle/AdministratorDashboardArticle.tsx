@@ -392,7 +392,7 @@ class AdministratorDashboardArticle extends React.Component {
                         }
                     }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add new article</Modal.Title>
+                        <Modal.Title>Add new jewelry</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
