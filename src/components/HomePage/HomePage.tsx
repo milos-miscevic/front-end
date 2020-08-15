@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap'
-import { faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CategoryType from '../../types/CategoryType';
 import { Link } from 'react-router-dom';
@@ -69,16 +69,13 @@ class HomePage extends React.Component {
         <Card>
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faListAlt} />  Jewelry types
+              <FontAwesomeIcon icon={faHome} />  Shop fine jewelry creations of timeless beauty and superlative craftsmanship that will be treasured always
             </Card.Title>
             <Row>
               {this.state.categories?.map(this.singleCategory)}
             </Row>
-
-
           </Card.Body>
         </Card>
-
       </Container>
     );
   }
@@ -88,11 +85,11 @@ class HomePage extends React.Component {
       <Col lg="3" md="4" sm="6" xs="12">
         <Card className="mb-3">
           <Card.Body>
-          <Card.Header>
-            <img alt={ category.name }
-                 src={ category.imagePath }
-                 className="w-100" />
-          </Card.Header>
+            <Card.Header>
+              <img alt={category.name}
+                src={category.imagePath}
+                className="w-100" />
+            </Card.Header>
             <Card.Title as="p">
               <b>{category.name}</b>
             </Card.Title>

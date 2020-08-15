@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, Card, CardImg, Container } from 'react-bootstrap';
 import { HashRouter, Link } from 'react-router-dom';
 import Cart from '../Cart/Cart';
 
@@ -43,16 +43,23 @@ export class MainMenu extends React.Component<MainMenuProperties> {
     render() {
         return (
 
-            <Nav variant="tabs">
+            <Container>
+                <Card>
+                    <Card.Header >
+                        <CardImg src="https://jewellery-art.com/wp-content/uploads/2018/10/Touch-of-Luxury-Logo-Horizontal-Version-Gold-Foil-to-use-on-white-background.png" alt="logo"></CardImg>
+                    </Card.Header>
+                </Card>
 
-                <HashRouter>
-                    {this.state.items.map(this.makeNavLink)}
-                    {this.props.showCart ? <Cart /> : ''}
+                <Nav variant="tabs">
 
-                </HashRouter>
+                    <HashRouter>
+                        {this.state.items.map(this.makeNavLink)}
+                        {this.props.showCart ? <Cart /> : ''}
 
-            </Nav>
+                    </HashRouter>
 
+                </Nav>
+            </Container>
 
         );
     }
